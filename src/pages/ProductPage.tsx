@@ -113,27 +113,23 @@ const ProductPage = () => {
                   transition: "0.3s linear",
                   position: 'relative',
 
-                  /* Tint effect on hover */
-                  '&:hover .MuiBox-root > img': {
-                    opacity: 0.5, // Adjust opacity for desired tint strength
-                    transition: 'opacity 0.2s ease-in-out', // Optional transition for smoother effect
-                  },
-
-
-                  "&:hover": {
-                    border: "2px solid hsl(26, 100%, 55%)",
-                  },
                 }}
               >
                 <Box
-                  sx={{ // Inner Box for tint (invisible by default)
+                  sx={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)', // White tint with opacity
-                    opacity: 0,
+                    backgroundColor: '#ffffff00',
+                    transition: '0.3s linear',
+
+                    "&:hover": {
+                      backgroundColor: '#fff9b  ',
+                    }
+
+
                   }}
                 />
                 <img
