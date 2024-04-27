@@ -1,5 +1,4 @@
 import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
-import sneakerImage from "../images/image-product-1.jpg";
 import previousIcn from "../images/icon-previous.svg";
 import nextIcn from "../images/icon-next.svg";
 import minusIcn from "../images/icon-minus.svg";
@@ -10,9 +9,11 @@ import thumbnail3 from "../images/image-product-3-thumbnail.jpg";
 import thumbnail4 from "../images/image-product-4-thumbnail.jpg";
 import { ShoppingCart } from "@mui/icons-material";
 import { useState } from "react";
+import BasicModal from "../components/Modal";
 
 const ProductPage = () => {
   const [count, setCount] = useState(0);
+  const [selectedThumbnail, setSelectedThumbnail] = useState(thumbnail1);
 
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
@@ -42,16 +43,7 @@ const ProductPage = () => {
           position: "relative",
         }}
       >
-        <Box
-          sx={{
-            borderRadius: { md: "1rem" },
-            overflow: "hidden",
-            height: { md: "350px" },
-            width: { md: "350px" },
-          }}
-        >
-          <img src={sneakerImage} alt="sneaker" style={{ width: "100%" }} />
-        </Box>
+        <BasicModal />
 
         <IconButton
           sx={{
@@ -102,6 +94,7 @@ const ProductPage = () => {
           {[thumbnail1, thumbnail2, thumbnail3, thumbnail4].map(
             (thumbnail, idx) => (
               <Box
+                onClick={() => setSelectedThumbnail(thumbnail)}
                 key={idx}
                 sx={{
                   height: "75px",
@@ -109,7 +102,11 @@ const ProductPage = () => {
                   borderRadius: ".5rem",
                   overflow: "hidden",
                   cursor: "pointer",
-                  border: "2px solid transparent",
+                  border: "2px solid",
+                  borderColor:
+                    thumbnail === selectedThumbnail
+                      ? "hsl(26, 100%, 55%)"
+                      : "transparent",
                   transition: "0.3s linear",
                   position: 'relative',
 
@@ -122,11 +119,11 @@ const ProductPage = () => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    backgroundColor: '#ffffff00',
+                    backgroundColor: thumbnail === selectedThumbnail ? '#fffa' : 'transparent',
                     transition: '0.3s linear',
 
                     "&:hover": {
-                      backgroundColor: '#fff9b  ',
+                      backgroundColor: thumbnail !== selectedThumbnail ? '#fff7' : '#fffa',
                     }
 
 
