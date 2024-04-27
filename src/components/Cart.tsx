@@ -2,13 +2,9 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import cartIcn from "../images/icon-cart.svg";
-import { Box, Button, Stack, Toolbar, Typography } from "@mui/material";
+import { Badge, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
 import thumbnail from "../images/image-product-1-thumbnail.jpg";
 import trashIcn from "../images/icon-delete.svg";
-
-// const options = [];
-
-// const ITEM_HEIGHT = 48;
 
 export default function Cart() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -22,23 +18,24 @@ export default function Cart() {
 
   return (
     <div>
-      {/* <IconButton
-        aria-label="more"
-        id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton> */}
+      <Badge badgeContent={2} sx={{
+        "& .MuiBadge-badge": {
+          bgcolor: "hsl(26, 100%, 55%)",
+          color: "hsl(0, 0%, 100%)",
+          height: ".9rem",
+          width: "1rem",
+          mt: 1,
+          fontSize: ".7rem",
+        }
+      }}>
+        <IconButton
+          sx={{ height: "1.7rem", width: "1.7rem", mt: { md: 0.4 } }}
+          onClick={handleClick}
+        >
+          <img src={cartIcn} alt="cart" style={{ height: "130%" }} />
+        </IconButton>
+      </Badge>
 
-      <IconButton
-        sx={{ height: "1.7rem", width: "1.7rem", mt: { md: 0.4 } }}
-        onClick={handleClick}
-      >
-        <img src={cartIcn} alt="cart" style={{ height: "130%" }} />
-      </IconButton>
       <Menu
         id="long-menu"
         MenuListProps={{
@@ -49,26 +46,16 @@ export default function Cart() {
         onClose={handleClose}
         PaperProps={{
           style: {
-            // maxHeight: ITEM_HEIGHT * 4.5,
             height: "14rem",
             width: "22rem",
             display: "flex",
             flexDirection: "column",
             borderRadius: ".75rem",
 
-            
+
           },
         }}
       >
-        {/* {options.map((option) => (
-          <MenuItem
-            key={option}
-            selected={option === "Pyxis"}
-            onClick={handleClose}
-          >
-            {option}
-          </MenuItem>
-        ))} */}
 
         <Toolbar
           sx={{

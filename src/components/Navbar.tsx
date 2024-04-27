@@ -67,14 +67,9 @@ const Navbar = () => {
 
           <Stack
             direction={"row"}
-            gap={1}
+            gap={3}
             sx={{ alignItems: "center", minHeight: "64px" }}
           >
-            {/* <IconButton
-              sx={{ height: "1.7rem", width: "1.7rem", mt: { md: 0.4 } }}
-            >
-              <img src={cartIcn} alt="cart" style={{ height: "130%" }} />
-            </IconButton> */}
             <Cart />
 
             <Avatar
