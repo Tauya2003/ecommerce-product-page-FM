@@ -8,7 +8,10 @@ import trashIcn from "../images/icon-delete.svg";
 import { useSelector } from "react-redux";
 
 export default function Cart() {
-  const { totalItems } = useSelector((store: any) => store.cart);
+  const { totalItems, items } = useSelector((store: any) => store.cart);
+
+
+  console.log(items[0]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -90,7 +93,7 @@ export default function Cart() {
               }}
             >
               <img
-                src={thumbnail}
+                src={items[0]?.thumbnail}
                 alt="product"
                 style={{ width: "100%", height: "100%" }}
               />
@@ -99,9 +102,9 @@ export default function Cart() {
             <Stack direction={"column"} >
               <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>Fall Limited Edition Sneakers</Typography>
               <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>
-                $128.00 &times;3{" "}
+                ${items[0].price} &times;{items[0].quantity}{" "}
                 <Box component={"span"} sx={{ fontWeight: 700, color: 'hsl(220, 13%, 13%)' }}>
-                  $375.00
+                  ${items[0].price * items[0].quantity}
                 </Box>
               </Typography>
             </Stack>

@@ -5,7 +5,7 @@ const cartItems = [
     id: "1",
     name: "Fall Limited Edition Sneakers",
     price: 250.0,
-    quantity: 1,
+    quantity: 3,
     thumbnail: thumbnail,
   },
 ];
