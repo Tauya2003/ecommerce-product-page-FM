@@ -3,15 +3,11 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import cartIcn from "../images/icon-cart.svg";
 import { Badge, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
-import thumbnail from "../images/image-product-1-thumbnail.jpg";
 import trashIcn from "../images/icon-delete.svg";
 import { useSelector } from "react-redux";
 
 export default function Cart() {
   const { totalItems, items } = useSelector((store: any) => store.cart);
-
-
-  console.log(items[0]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
