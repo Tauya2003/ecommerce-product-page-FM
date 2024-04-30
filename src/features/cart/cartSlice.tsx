@@ -16,13 +16,42 @@ interface CartState {
 // define the initial state
 const initialState: CartState = {
     items: cartItems,
-    totalItems: 2,
+    totalItems: 0,
 };
 // create a slice
 const cartSlice = createSlice({
     name: "cart",
     initialState,
-    reducers: {}
+    reducers: {
+        removeItem: (state, action) => {
+            const id = action.payload;
+            const existingItem = state.items.find((item) => item.id === id);
+            if (existingItem) {
+                state.items = state.items.filter((item) => item.id !== id);
+                state.totalItems -= existingItem.quantity;
+            }
+        },
+        incrementItem: (state, { payload }) => {
+            const id = payload;
+            const existingItem = state.items.find((item) => item.id === id);
+            if (existingItem) {
+                existingItem.quantity++;
+                state.totalItems++;
+            }
+        },
+        decrementItem: (state, { payload }) => {
+            const id = payload;
+            const existingItem = state.items.find((item) => item.id === id);
+            if (existingItem) {
+                existingItem.quantity--;
+                state.totalItems--;
+            }
+        }
+    }
 })
 
+// export the action creator
+export const { removeItem, incrementItem, decrementItem } = cartSlice.actions;
+
+// export the reducer
 export default cartSlice.reducer;

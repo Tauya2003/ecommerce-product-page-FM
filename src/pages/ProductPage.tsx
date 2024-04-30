@@ -10,19 +10,22 @@ import thumbnail4 from "../images/image-product-4-thumbnail.jpg";
 import { ShoppingCart } from "@mui/icons-material";
 import { useState } from "react";
 import BasicModal from "../components/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementItem, decrementItem } from "../features/cart/cartSlice";
+
 
 const ProductPage = () => {
-  const [count, setCount] = useState(0);
+  const { items } = useSelector((state: any) => state.cart);
+  const dispatch = useDispatch();
+
   const [selectedThumbnail, setSelectedThumbnail] = useState(thumbnail1);
 
   const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
+    dispatch(incrementItem(items[0]?.id));
   };
 
   const handleDecrement = () => {
-    if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
-    }
+    dispatch(decrementItem(items[0]?.id));
   };
 
   return (
@@ -240,7 +243,7 @@ const ProductPage = () => {
             </IconButton>
 
             <Typography sx={{ color: "hsl(220, 13%, 13%)", fontWeight: 700 }}>
-              {count}
+              {items[0]?.quantity ?? 0}
             </Typography>
 
             <IconButton onClick={handleIncrement}>

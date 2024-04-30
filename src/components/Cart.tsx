@@ -4,9 +4,12 @@ import Menu from "@mui/material/Menu";
 import cartIcn from "../images/icon-cart.svg";
 import { Badge, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
 import trashIcn from "../images/icon-delete.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeItem } from "../features/cart/cartSlice";
 
 export default function Cart() {
+  const dispatch = useDispatch();
+
   const { totalItems, items } = useSelector((store: any) => store.cart);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -107,7 +110,7 @@ export default function Cart() {
                   </Typography>
                 </Stack>
 
-                <IconButton sx={{ borderRadius: "50%" }}>
+                <IconButton sx={{ borderRadius: "50%" }} onClick={() => { dispatch(removeItem(items[0].id)) }}>
                   <img src={trashIcn} alt="trash" />
                 </IconButton>
               </Stack>
