@@ -16,7 +16,7 @@ interface CartState {
 // define the initial state
 const initialState: CartState = {
     items: cartItems,
-    totalItems: 10,
+    totalItems: 2,
 };
 // create a slice
 const cartSlice = createSlice({

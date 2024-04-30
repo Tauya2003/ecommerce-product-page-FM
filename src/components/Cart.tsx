@@ -79,57 +79,62 @@ export default function Cart() {
             p: "18px",
           }}
         >
-          <Stack direction={"row"} gap={1} alignItems={'center'} justifyContent={'space-between'}>
-            <Box
-              sx={{
-                width: "50px",
-                height: "50px",
-                overflow: "hidden",
-                borderRadius: ".5rem",
-              }}
-            >
-              <img
-                src={items[0]?.thumbnail}
-                alt="product"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </Box>
-
-            <Stack direction={"column"} >
-              <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>Fall Limited Edition Sneakers</Typography>
-              <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>
-                ${items[0].price} &times;{items[0].quantity}{" "}
-                <Box component={"span"} sx={{ fontWeight: 700, color: 'hsl(220, 13%, 13%)' }}>
-                  ${items[0].price * items[0].quantity}
+          {totalItems > 0 ? (
+            <>
+              <Stack direction={"row"} gap={1} alignItems={'center'} justifyContent={'space-between'}>
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    overflow: "hidden",
+                    borderRadius: ".5rem",
+                  }}
+                >
+                  <img
+                    src={items[0]?.thumbnail}
+                    alt="product"
+                    style={{ width: "100%", height: "100%" }}
+                  />
                 </Box>
-              </Typography>
-            </Stack>
 
-            <IconButton sx={{ borderRadius: "50%" }}>
-              <img src={trashIcn} alt="trash" />
-            </IconButton>
-          </Stack>
+                <Stack direction={"column"} >
+                  <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>Fall Limited Edition Sneakers</Typography>
+                  <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>
+                    ${items[0].price} &times;{items[0].quantity}{" "}
+                    <Box component={"span"} sx={{ fontWeight: 700, color: 'hsl(220, 13%, 13%)' }}>
+                      ${items[0].price * items[0].quantity}
+                    </Box>
+                  </Typography>
+                </Stack>
 
-          <Button
-            sx={{
-              bgcolor: "hsl(26, 100%, 55%)",
-              width: "100%",
-              height: { xs: "50px", md: '45px' },
-              mt: "1.5rem",
-              textTransform: "capitalize",
-              color: "hsl(0, 0%, 100%)",
-              borderRadius: '10px',
+                <IconButton sx={{ borderRadius: "50%" }}>
+                  <img src={trashIcn} alt="trash" />
+                </IconButton>
+              </Stack>
 
-              "&:hover": {
-                bgcolor: "hsl(26, 100%, 55%)",
-              },
-            }}
-          >
-            Checkout
-          </Button>
-          {/* <Typography sx={{ fontWeight: 500, color: "hsl(219, 9%, 45%)" }}>
-            Your cart is empty.
-          </Typography> */}
+              <Button
+                sx={{
+                  bgcolor: "hsl(26, 100%, 55%)",
+                  width: "100%",
+                  height: { xs: "50px", md: '45px' },
+                  mt: "1.5rem",
+                  textTransform: "capitalize",
+                  color: "hsl(0, 0%, 100%)",
+                  borderRadius: '10px',
+
+                  "&:hover": {
+                    bgcolor: "hsl(26, 100%, 55%)",
+                  },
+                }}
+              >
+                Checkout
+              </Button>
+            </>
+          ) : (<>
+            <Typography sx={{ fontWeight: 500, color: "hsl(219, 9%, 45%)" }}>
+              Your cart is empty.
+            </Typography>
+          </>)}
         </Box>
       </Menu>
     </div>
