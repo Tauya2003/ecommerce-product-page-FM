@@ -5,8 +5,11 @@ import cartIcn from "../images/icon-cart.svg";
 import { Badge, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
 import thumbnail from "../images/image-product-1-thumbnail.jpg";
 import trashIcn from "../images/icon-delete.svg";
+import { useSelector } from "react-redux";
 
 export default function Cart() {
+  const { totalItems } = useSelector((store: any) => store.cart);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -18,16 +21,18 @@ export default function Cart() {
 
   return (
     <div>
-      <Badge badgeContent={2} sx={{
-        "& .MuiBadge-badge": {
-          bgcolor: "hsl(26, 100%, 55%)",
-          color: "hsl(0, 0%, 100%)",
-          height: ".9rem",
-          width: "1rem",
-          mt: 1,
-          fontSize: ".7rem",
-        }
-      }}>
+      <Badge badgeContent={totalItems}
+        max={9}
+        sx={{
+          "& .MuiBadge-badge": {
+            bgcolor: "hsl(26, 100%, 55%)",
+            color: "hsl(0, 0%, 100%)",
+            height: ".9rem",
+            width: "1rem",
+            mt: 1,
+            fontSize: ".7rem",
+          }
+        }}>
         <IconButton
           sx={{ height: "1.7rem", width: "1.7rem", mt: { md: 0.4 } }}
           onClick={handleClick}
