@@ -1,6 +1,5 @@
-import { Avatar, Box, Button, IconButton, Stack, Toolbar } from "@mui/material";
+import { Avatar, Box, Button, Stack, Toolbar } from "@mui/material";
 import logo from "../images/logo.svg";
-// import cartIcn from "../images/icon-cart.svg";
 import plcHolderAvatar from "../images/image-avatar.png";
 import Cart from "./Cart";
 import MenuDrawer from "./MenuDrawer";
