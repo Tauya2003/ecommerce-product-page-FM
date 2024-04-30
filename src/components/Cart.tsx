@@ -46,13 +46,11 @@ export default function Cart() {
         onClose={handleClose}
         PaperProps={{
           style: {
-            height: "14rem",
+            height: "auto",
             width: "22rem",
             display: "flex",
             flexDirection: "column",
             borderRadius: ".75rem",
-
-
           },
         }}
       >
@@ -77,7 +75,7 @@ export default function Cart() {
             p: "18px",
           }}
         >
-          <Stack direction={"row"} gap={1}>
+          <Stack direction={"row"} gap={1} alignItems={'center'} justifyContent={'space-between'}>
             <Box
               sx={{
                 width: "50px",
@@ -93,11 +91,11 @@ export default function Cart() {
               />
             </Box>
 
-            <Stack direction={"column"}>
-              <Typography>Fall Limited Edition Sneakers</Typography>
-              <Typography>
+            <Stack direction={"column"} >
+              <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>Fall Limited Edition Sneakers</Typography>
+              <Typography sx={{ fontSize: { md: '0.9rem' }, color: "hsl(219, 9%, 45%)" }}>
                 $128.00 &times;3{" "}
-                <Box component={"span"} sx={{ fontWeight: 700 }}>
+                <Box component={"span"} sx={{ fontWeight: 700, color: 'hsl(220, 13%, 13%)' }}>
                   $375.00
                 </Box>
               </Typography>
@@ -112,13 +110,14 @@ export default function Cart() {
             sx={{
               bgcolor: "hsl(26, 100%, 55%)",
               width: "100%",
-              height: "50px",
+              height: { xs: "50px", md: '45px' },
               mt: "1.5rem",
               textTransform: "capitalize",
               color: "hsl(0, 0%, 100%)",
+              borderRadius: '10px',
 
               "&:hover": {
-                bgcolor: '"hsl(26, 100%, 55%)"',
+                bgcolor: "hsl(26, 100%, 55%)",
               },
             }}
           >
