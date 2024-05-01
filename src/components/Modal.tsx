@@ -1,23 +1,53 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import sneakerImage from "../images/image-product-1.jpg";
 import { IconButton, Stack } from '@mui/material';
 import { Close, NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { useState } from 'react';
-import thumbnail1 from "../images/image-product-1-thumbnail.jpg";
-import thumbnail2 from "../images/image-product-2-thumbnail.jpg";
-import thumbnail3 from "../images/image-product-3-thumbnail.jpg";
-import thumbnail4 from "../images/image-product-4-thumbnail.jpg";
+
 
 interface BasicModalProps {
-    img: string;
+    selectedImage: {
+        image: string;
+        thumbnail: string;
+    }
+    images: {
+        image: string;
+        thumbnail: string;
+    }[]
 }
 
-export default function BasicModal({ img }: BasicModalProps) {
+export default function BasicModal({ selectedImage, images }: BasicModalProps) {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [selectedThumbnail, setSelectedThumbnail] = useState(thumbnail1);
+
+    const [selectedImg, setSelectedImg] = useState(selectedImage.image)
+    const [selectedThumbnail, setSelectedThumbnail] = useState(selectedImage.thumbnail);
+
+    const handleOpen = () => {
+        setOpen(true)
+        setSelectedImg(selectedImage.image)
+        setSelectedThumbnail(selectedImage?.thumbnail)
+    };
+
+    const handleNext = () => {
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]?.image === selectedImg) {
+                setSelectedImg(images[i + 1]?.image ?? images[0]?.image)
+                setSelectedThumbnail(images[i + 1]?.thumbnail ?? images[0]?.thumbnail)
+                break;
+            }
+        }
+    }
+
+    const handlePrevious = () => {
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]?.image === selectedImg) {
+                setSelectedImg(images[i - 1]?.image ?? images[images.length - 1].image)
+                setSelectedThumbnail(images[i - 1]?.thumbnail ?? images[images.length - 1].thumbnail)
+                break;
+            }
+        }
+    }
 
     return (
         <div>
@@ -30,7 +60,7 @@ export default function BasicModal({ img }: BasicModalProps) {
                     width: { md: "350px" },
                 }}
             >
-                <img src={img} alt="sneaker" style={{
+                <img src={selectedImage.image} alt="sneaker" style={{
                     width: "100%",
                     transition: 'all .3s',
                 }} />
@@ -41,7 +71,9 @@ export default function BasicModal({ img }: BasicModalProps) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
 
-                sx={{ display: 'grid', placeItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
+                sx={{
+                    display: { xs: 'none', md: 'grid' }, placeItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                }}
             >
                 <Stack sx={{ width: 420, outline: 'none', gap: 2 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
@@ -57,10 +89,11 @@ export default function BasicModal({ img }: BasicModalProps) {
                             position: "relative",
                         }}
                     >
-                        <img src={sneakerImage} alt="sneaker" style={{ width: "100%", borderRadius: '1rem' }} />
+                        <img src={selectedImg} alt="sneaker" style={{ width: "100%", borderRadius: '1rem' }} />
 
                         {[<NavigateBefore />, <NavigateNext />].map((icn, index) => (
                             <IconButton
+                                onClick={index !== 0 ? handleNext : handlePrevious}
                                 key={index}
                                 sx={{
                                     position: "absolute",
@@ -86,10 +119,13 @@ export default function BasicModal({ img }: BasicModalProps) {
                     </Box>
 
                     <Stack direction={'row'} sx={{ width: '100%', justifyContent: 'space-evenly' }}>
-                        {[thumbnail1, thumbnail2, thumbnail3, thumbnail4].map((thumbnail, idx) => (
+                        {images.map((image, idx) => (
                             <Box
                                 key={idx}
-                                onClick={() => setSelectedThumbnail(thumbnail)}
+                                onClick={() => {
+                                    setSelectedImg(image?.image)
+                                    setSelectedThumbnail(image?.thumbnail)
+                                }}
                                 sx={{
                                     height: "75px",
                                     width: "75px",
@@ -97,7 +133,7 @@ export default function BasicModal({ img }: BasicModalProps) {
                                     overflow: "hidden",
                                     cursor: "pointer",
                                     border: "2px solid",
-                                    borderColor: thumbnail === selectedThumbnail ? 'hsl(26, 100%, 55%)' : 'transparent',
+                                    borderColor: image?.thumbnail === selectedThumbnail ? 'hsl(26, 100%, 55%)' : 'transparent',
                                     transition: "0.3s linear",
                                     position: 'relative',
 
@@ -110,18 +146,18 @@ export default function BasicModal({ img }: BasicModalProps) {
                                         left: 0,
                                         width: '100%',
                                         height: '100%',
-                                        backgroundColor: thumbnail === selectedThumbnail ? '#fffa' : 'transparent',
+                                        backgroundColor: image?.thumbnail === selectedThumbnail ? '#fffa' : 'transparent',
                                         transition: '0.3s linear',
 
                                         "&:hover": {
-                                            backgroundColor: thumbnail !== selectedThumbnail ? '#fff7' : '#fffa',
+                                            backgroundColor: image?.thumbnail !== selectedThumbnail ? '#fff7' : '#fffa',
                                         }
 
 
                                     }}
                                 />
                                 <img
-                                    src={thumbnail}
+                                    src={image?.thumbnail}
                                     alt="thumbnail"
                                     style={{ width: "100%", height: "100%" }}
                                 />

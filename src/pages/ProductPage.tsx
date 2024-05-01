@@ -26,7 +26,9 @@ const ProductPage = () => {
   const dispatch = useDispatch();
 
   const [selectedThumbnail, setSelectedThumbnail] = useState(thumbnail1);
-  const [selectedImage, setSelectedImage] = useState(products[0]?.images[0].image);
+  const [selectedImage, setSelectedImage] = useState(products[0]?.images[0]);
+
+  console.log(products[0]?.images)
 
   const handleIncrement = () => {
     dispatch(incrementItem(items[0]?.id));
@@ -38,8 +40,8 @@ const ProductPage = () => {
 
   const handleNext = () => {
     for (let i = 0; i < products[0]?.images.length; i++) {
-      if (products[0]?.images[i].image === selectedImage) {
-        setSelectedImage(products[0]?.images[i + 1]?.image ?? products[0]?.images[0].image);
+      if (products[0]?.images[i].image === selectedImage.image) {
+        setSelectedImage(products[0]?.images[i + 1] ?? products[0]?.images[0]);
         setSelectedThumbnail(products[0]?.images[i + 1]?.thumbnail ?? products[0]?.images[0].thumbnail);
         break;
       }
@@ -48,8 +50,8 @@ const ProductPage = () => {
 
   const handlePrevious = () => {
     for (let i = 0; i < products[0]?.images.length; i++) {
-      if (products[0]?.images[i].image === selectedImage) {
-        setSelectedImage(products[0]?.images[i - 1]?.image ?? products[0]?.images[products[0]?.images.length - 1].image);
+      if (products[0]?.images[i].image === selectedImage.image) {
+        setSelectedImage(products[0]?.images[i - 1] ?? products[0]?.images[products[0]?.images.length - 1]);
         setSelectedThumbnail(products[0]?.images[i - 1]?.thumbnail ?? products[0]?.images[products[0]?.images.length - 1].thumbnail);
         break;
       }
@@ -74,7 +76,7 @@ const ProductPage = () => {
           position: "relative",
         }}
       >
-        <BasicModal img={selectedImage} />
+        <BasicModal selectedImage={selectedImage} images={products[0]?.images} />
 
         <IconButton
           onClick={handlePrevious}
@@ -128,7 +130,7 @@ const ProductPage = () => {
             (image, idx) => (
               <Box
                 onClick={() => {
-                  setSelectedImage(image.image),
+                  setSelectedImage(image),
                     setSelectedThumbnail(image.thumbnail)
                 }}
                 key={idx}
