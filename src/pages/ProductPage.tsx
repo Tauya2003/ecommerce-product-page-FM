@@ -4,21 +4,29 @@ import nextIcn from "../images/icon-next.svg";
 import minusIcn from "../images/icon-minus.svg";
 import plusIcn from "../images/icon-plus.svg";
 import thumbnail1 from "../images/image-product-1-thumbnail.jpg";
-import thumbnail2 from "../images/image-product-2-thumbnail.jpg";
-import thumbnail3 from "../images/image-product-3-thumbnail.jpg";
-import thumbnail4 from "../images/image-product-4-thumbnail.jpg";
 import { ShoppingCart } from "@mui/icons-material";
 import { useState } from "react";
 import BasicModal from "../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementItem, decrementItem } from "../features/cart/cartSlice";
 
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  discount: number;
+  images: { image: string; thumbnail: string }[];
+}
 
 const ProductPage = () => {
   const { items } = useSelector((state: any) => state.cart);
+  const products: Product[] = useSelector((state: any) => state.products.products);
+
   const dispatch = useDispatch();
 
   const [selectedThumbnail, setSelectedThumbnail] = useState(thumbnail1);
+  const [selectedImage, setSelectedImage] = useState(products[0]?.images[0].image);
 
   const handleIncrement = () => {
     dispatch(incrementItem(items[0]?.id));
@@ -27,6 +35,26 @@ const ProductPage = () => {
   const handleDecrement = () => {
     dispatch(decrementItem(items[0]?.id));
   };
+
+  const handleNext = () => {
+    for (let i = 0; i < products[0]?.images.length; i++) {
+      if (products[0]?.images[i].image === selectedImage) {
+        setSelectedImage(products[0]?.images[i + 1]?.image ?? products[0]?.images[0].image);
+        setSelectedThumbnail(products[0]?.images[i + 1]?.thumbnail ?? products[0]?.images[0].thumbnail);
+        break;
+      }
+    }
+  }
+
+  const handlePrevious = () => {
+    for (let i = 0; i < products[0]?.images.length; i++) {
+      if (products[0]?.images[i].image === selectedImage) {
+        setSelectedImage(products[0]?.images[i - 1]?.image ?? products[0]?.images[products[0]?.images.length - 1].image);
+        setSelectedThumbnail(products[0]?.images[i - 1]?.thumbnail ?? products[0]?.images[products[0]?.images.length - 1].thumbnail);
+        break;
+      }
+    }
+  }
 
   return (
     <Box
@@ -46,9 +74,10 @@ const ProductPage = () => {
           position: "relative",
         }}
       >
-        <BasicModal />
+        <BasicModal img={selectedImage} />
 
         <IconButton
+          onClick={handlePrevious}
           sx={{
             position: "absolute",
             display: { md: "none" },
@@ -68,6 +97,7 @@ const ProductPage = () => {
         </IconButton>
 
         <IconButton
+          onClick={handleNext}
           sx={{
             position: "absolute",
             display: { md: "none" },
@@ -94,10 +124,13 @@ const ProductPage = () => {
             mt: "2rem",
           }}
         >
-          {[thumbnail1, thumbnail2, thumbnail3, thumbnail4].map(
-            (thumbnail, idx) => (
+          {products[0]?.images.map(
+            (image, idx) => (
               <Box
-                onClick={() => setSelectedThumbnail(thumbnail)}
+                onClick={() => {
+                  setSelectedImage(image.image),
+                    setSelectedThumbnail(image.thumbnail)
+                }}
                 key={idx}
                 sx={{
                   height: "75px",
@@ -107,7 +140,7 @@ const ProductPage = () => {
                   cursor: "pointer",
                   border: "2px solid",
                   borderColor:
-                    thumbnail === selectedThumbnail
+                    image.thumbnail === selectedThumbnail
                       ? "hsl(26, 100%, 55%)"
                       : "transparent",
                   transition: "0.3s linear",
@@ -122,18 +155,18 @@ const ProductPage = () => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    backgroundColor: thumbnail === selectedThumbnail ? '#fffa' : 'transparent',
+                    backgroundColor: image.thumbnail === selectedThumbnail ? '#fffa' : 'transparent',
                     transition: '0.3s linear',
 
                     "&:hover": {
-                      backgroundColor: thumbnail !== selectedThumbnail ? '#fff7' : '#fffa',
+                      backgroundColor: image?.thumbnail !== selectedThumbnail ? '#fff7' : '#fffa',
                     }
 
 
                   }}
                 />
                 <img
-                  src={thumbnail}
+                  src={image.thumbnail}
                   alt="thumbnail"
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -165,13 +198,11 @@ const ProductPage = () => {
             color: "hsl(220, 13%, 13%)",
           }}
         >
-          Fall Limited Edition Sneakers
+          {products[0]?.name ?? ""}
         </Typography>
 
         <Typography sx={{ color: "hsl(219, 9%, 45%)", marginTop: "1rem" }}>
-          These low-profile sneakers are your perfect casual wear companion.
-          Featuring a durable rubber outer sole, they’ll withstand everything
-          the weather can offer.
+          {products[0]?.description ?? ""}
         </Typography>
 
         <Stack
@@ -192,7 +223,7 @@ const ProductPage = () => {
               mr: { md: "6rem" },
             }}
           >
-            $125.00
+            {`$${((products[0]?.price ?? 0) * ((products[0]?.discount ?? 0) / 100)).toFixed(2)}`}
           </Typography>
 
           <Box
@@ -207,7 +238,7 @@ const ProductPage = () => {
             }}
           >
             <Typography sx={{ color: " hsl(26, 100%, 55%)", fontWeight: 700 }}>
-              50%
+              {products[0]?.discount ?? 0}%
             </Typography>
           </Box>
 
@@ -219,7 +250,7 @@ const ProductPage = () => {
                 fontWeight: 700,
               }}
             >
-              $250.00
+              ${(products[0]?.price ?? 0).toFixed(2)}
             </Typography>
           </Box>
         </Stack>

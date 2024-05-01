@@ -9,7 +9,11 @@ import thumbnail2 from "../images/image-product-2-thumbnail.jpg";
 import thumbnail3 from "../images/image-product-3-thumbnail.jpg";
 import thumbnail4 from "../images/image-product-4-thumbnail.jpg";
 
-export default function BasicModal() {
+interface BasicModalProps {
+    img: string;
+}
+
+export default function BasicModal({ img }: BasicModalProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -26,7 +30,10 @@ export default function BasicModal() {
                     width: { md: "350px" },
                 }}
             >
-                <img src={sneakerImage} alt="sneaker" style={{ width: "100%" }} />
+                <img src={img} alt="sneaker" style={{
+                    width: "100%",
+                    transition: 'all .3s',
+                }} />
             </Box>
             <Modal
                 open={open}
