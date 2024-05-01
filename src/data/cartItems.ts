@@ -1,4 +1,4 @@
-import thumbnail from "./images/image-product-1-thumbnail.jpg";
+import thumbnail from "../images/image-product-1-thumbnail.jpg";
 
 const cartItems = [
   {
