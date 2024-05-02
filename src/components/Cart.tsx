@@ -133,11 +133,11 @@ export default function Cart() {
                 Checkout
               </Button>
             </>
-          ) : (<>
-            <Typography sx={{ fontWeight: 500, color: "hsl(219, 9%, 45%)" }}>
+          ) : (<Box sx={{ height: 150, display: 'grid', alignContent: 'center' }}>
+            <Typography sx={{ fontWeight: 500, color: "hsl(219, 9%, 45%)", textAlign: 'center'}}>
               Your cart is empty.
             </Typography>
-          </>)}
+          </Box>)}
         </Box>
       </Menu>
     </div>
